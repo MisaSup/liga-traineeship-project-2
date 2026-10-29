@@ -1,67 +1,103 @@
-# React todo project
+# React TODO project
 
-npm run dev - запустить проект
+Учебный шаблон приложения со списком задач.
 
-## Пример итогового проекта
+## Быстрый старт
 
-https://todo-liga-internship.vercel.app/
+```bash
+npm install       # установить зависимости
+npm run dev:all   # запустить mock API и dev-сервер одновременно
+```
 
-## Технологии которые используются в проекте
+Либо по отдельности:
 
-React, React-router-dom, Typescript, Redux, Axios, React Hook Form, Yup
-Webpack, Eslint, Prettier
+```bash
+npm run mock      # mock API на http://localhost:3001
+npm run dev       # dev-сервер на http://localhost:3000
+```
+
+## Технологии
+
+- **React 19** + **React Router 8**
+- **TypeScript 7**
+- **Webpack 5** + **esbuild** (`esbuild-loader`)
+- **CSS Modules** (чистый CSS, без препроцессоров)
+- **Oxlint** (линтер) и **Oxfmt** (форматтер) вместо ESLint/Prettier
+- **json-server** — локальный REST API для данных
+
+## Скрипты
+
+| Скрипт              | Что делает                                            |
+| ------------------- | ----------------------------------------------------- |
+| `npm run dev`       | dev-сервер webpack (http://localhost:3000)            |
+| `npm run dev:all`   | mock API + dev-сервер вместе                          |
+| `npm run build`     | production-сборка в `dist/`                           |
+| `npm run typecheck` | проверка типов (`tsc --noEmit`)                       |
+| `npm run lint`      | линт через oxlint                                     |
+| `npm run format`    | форматирование через oxfmt                            |
+| `npm run mock`      | mock API на http://localhost:3001 (данные из db.json) |
+
+## Данные
+
+Данные берутся из `db.json` через `json-server` (REST API на `http://localhost:3001`).
+Работа с сетью — в папке `src/api`, по файлу на сущность.
+
+Доступные эндпоинты для `todos`:
+
+| Метод       | URL                | Действие    |
+| ----------- | ------------------ | ----------- |
+| GET         | `/todos`           | список      |
+| GET         | `/todos/:id`       | одна запись |
+| POST        | `/todos`           | создать     |
+| PUT / PATCH | `/todos/:id`       | обновить    |
+| DELETE      | `/todos/:id`       | удалить     |
+| GET         | `/todos?q=react`   | поиск       |
+| GET         | `/todos?_sort=...` | сортировка  |
 
 ## Структура шаблона
 
 ```
 .
-├── .vscode                                  # конфигурация под vs-code
-├── dist                                     # папка для билда (появится после npm run build)
-├── config
-│   ├── constants.js                           # константные пути к файлам и папкам
-│   ├── css.modules.config.js                   # конфигурация css modules
-│   ├── jest.config.js                          # конфигурация jest
-│   ├── postcss.config.js                       # конфигурация postcss
-│   ├── svgo.config.js                          # конфигурация обработки svg
-│   ├── test.config.js                          # конфигурация окружения Jest, React Testing Library
-│   ├── webpack.config.cache.js                 # конфигурация кеширования окружения webpack
-│   ├── webpack.config.dev.js                   # конфигурация dev окружения webpack
-│   ├── webpack.config.env.js                   # парсинг .env и проброс переменных в webpack
-│   ├── webpack.config.https.js                 # конфигурация dev сервера с https
-│   ├── webpack.config.js                       # базовый конфиг webpack
-│   ├── webpack.config.modules.js               # обработка путей к папкам из tsconfig для webpack
-│   ├── webpack.config.prod.js                  # конфигурация сборки
-│   └── webpack.config.styles.js                # конфигурация обработчиков css
+├── .vscode                          # конфигурация под VS Code
+├── dist                             # папка для билда (появится после npm run build)
+├── public
+│   └── index.html                   # корневой html (шаблон для HtmlWebpackPlugin)
 ├── src
-|   ├── api                                    # папка для работы с сетью, создаются файлы под каждую сущность
-│   ├── app                                    # основные компоненты с бизнес-логикой
-│       ├── taskList                             # например, папка taskList, в которой содержится компонент страницы списка задач
-│           ├── components                         # внутренние компоненты
-│           ├── integration                        # файлы для redux
-|           ├── TaskList.tsx                       # корневой файл компонента
-|           ├── TaskList.types.ts                  # типы для компонента, например интерфейс пропсов TaskListProps
-│   ├── components                             # папка для компонентов без бизнес-логики (dumb components)
-│   ├── constants                              # общие константы разбитые по файлам
-│   ├── mocks                                  # папка для всех моков
-│   ├── types                                  # интерфейсы для сущностей, например для Task
-│   ├── utils                                  # вспомогательные функции, также разбиваем по файлам. Например, delay.ts
-│   ├── index.html                             # корневой html
-│   ├── index.tsx                              # точка входа в приложение для webpack
-│   ├── App.tsx                                # точка входа в приложение, роутер
-│   ├── react-app-env.d.ts                     # декларация модулей и переменных
-├── .browserlistsrc                          # список браузеров для autoprefixer
-├── .editorconfig                             # настройки для редакторов
-├── .eslintignore                            # игнорирование eslint
-├── .eslintrc                                # Конфиг Eslint
-├── .gitignore                               # Игнор файл для гита
-├── .prettierrc                              # Конфиг prettier
+│   ├── api                          # работа с сетью, файл под каждую сущность
+│   │   └── todos.ts
+│   ├── app                          # компоненты с бизнес-логикой (страницы)
+│   │   └── TodoList                 # страница списка задач
+│   │       ├── TodoList.tsx         # корневой файл компонента
+│   │       └── TodoList.module.css  # стили компонента
+│   ├── components                   # компоненты без бизнес-логики (dumb components)
+│   │   ├── Checkbox
+│   │   ├── Loader
+│   │   ├── PageContainer
+│   │   ├── SearchInput
+│   │   ├── TextField
+│   │   └── index.ts                 # реэкспорт всех компонентов
+│   ├── constants                    # общие константы, разбитые по файлам
+│   ├── router
+│   │   └── router.tsx               # конфигурация роутера
+│   ├── types                        # интерфейсы для сущностей, напр. для Todo
+│   ├── utils                        # вспомогательные функции, разбитые по файлам
+│   ├── index.tsx                    # точка входа в приложение
+│   └── react-app-env.d.ts           # декларации модулей и переменных
+├── .browserslistrc                  # список браузеров для webpack/esbuild
+├── .editorconfig                    # настройки для редакторов
+├── .gitignore                       # игнор-файл для git
+├── .oxlintrc.json                   # конфиг oxlint
+├── .oxfmtrc.json                    # конфиг oxfmt
+├── db.json                          # данные для json-server
 ├── package.json
-├── tsconfig.json                             # Конфиг тайпскрипта
+├── tsconfig.json                    # конфиг TypeScript
+├── webpack.config.mjs               # конфиг webpack
 └── README.md
 ```
 
 ## Правила по проекту
 
-1. Один файл – один компонент
-2. Импорты должны быть абсолютными
-3. Типы (types), константы (constants), вспомогательные функции (utils), редьюсеры (reducers), экшены (actions) в отдельных файлах
+1. Один файл — один компонент.
+2. Импорты относительные.
+3. Типы (`types`), константы (`constants`), вспомогательные функции (`utils`) — в отдельных файлах.
+4. Стили — через CSS Modules (`*.module.css`), классы подключаются как `styles.className`.

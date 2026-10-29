@@ -1,6 +1,6 @@
 import React from 'react';
+import styles from './TextField.module.css';
 import { TextFieldProps } from './TextField.types';
-import './TextField.css';
 
 export function TextField({
   label,
@@ -12,19 +12,19 @@ export function TextField({
   errorText,
 }: TextFieldProps) {
   return (
-    <div className={`mb-3 ${containerClassName}`}>
-      <label htmlFor={label} className="form-label">
+    <div className={`${styles.container} ${containerClassName}`}>
+      <label htmlFor={label} className={styles.label}>
         {label}
       </label>
       <input
         type={inputType}
-        className="form-control"
+        className={styles.input}
         id={label}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
       />
-      {errorText && <div className="invalid">{errorText}</div>}
+      {errorText && <div className={styles.invalid}>{errorText}</div>}
     </div>
   );
 }

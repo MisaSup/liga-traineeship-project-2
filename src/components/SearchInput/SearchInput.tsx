@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, MouseEvent } from 'react';
-import './SearchInput.css';
+import styles from './SearchInput.module.css';
 import { SearchInputProps } from './SearchInput.types';
 
 export function SearchInput({ onChange, value, onReset }: SearchInputProps) {
@@ -7,14 +7,14 @@ export function SearchInput({ onChange, value, onReset }: SearchInputProps) {
 
   const onResetBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    if (onReset) onReset();
+    onReset?.();
   };
 
   return (
-    <div className="search-panel">
-      <input className="form-control search-input" placeholder="search" onChange={onSearchInputChange} value={value} />
-      <button className="close" onClick={onResetBtnClick}>
-        <i className="fa fa-close"></i>
+    <div className={styles.panel}>
+      <input className={styles.input} placeholder="search" onChange={onSearchInputChange} value={value} />
+      <button className={styles.close} onClick={onResetBtnClick} type="button" aria-label="reset">
+        ×
       </button>
     </div>
   );

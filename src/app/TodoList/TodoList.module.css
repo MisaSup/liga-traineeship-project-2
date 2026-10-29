@@ -1,0 +1,51 @@
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+.toolbar {
+  margin-bottom: 1rem;
+}
+
+.addRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #0d6efd;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #0b5ed7;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.deleteButton {
+  border: none;
+  background: none;
+  color: #dc3545;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
